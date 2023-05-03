@@ -1,52 +1,27 @@
-const puppeteer = require('puppeteer');
+const fs = require('fs');
+const cheerio = require('cheerio');
+const request = require('request');
 
-const {join} = require('path');
+request("https://www.bigbasket.com", cb);
 
-/**
- * @type {import("puppeteer").Configuration}
- */
-module.exports = {
-  cacheDirectory: join(__dirname, '.cache', 'puppeteer'),
-};
+function cb(err, res, html){
 
-// (async () => {
-// 	const browser = await puppeteer.launch({
-//         headless: 'false', 
-//         //  defaultViewport: null,
-//         //  ignoreDefaultArgs: ['--disable-extensions'],
-//         // args: ["--no-sandbox", '--disable-setuid-sandbox']
-//     });
-//     // console.log(await browser.version());
-// 	// const page = await browser.newPage();   
-//     // console.log(page);
-// 	// let value = await page.goto('http://www.bigbasket.com/');
-// 	// console.log(value);
-// 	await browser.close();
-// })();
+    if(err)
+    return console.log("error = ", error);
 
-const browserpromise = puppeteer.launch({
-    headless: false,
-    defaultViewport: null,
-    ignoreDefaultArgs: ['--disable-extensions'],
-    args: ["--no-sandbox", '--disable-setuid-sandbox'],
-    executablePath: '/usr/bin/chromium-browser'
+    handleHtml(html);
+}
 
-});
+const handleHtml= (html)=>{
 
-browserpromise
-.then((browser)=>{
-   let page = browser.newPage();
-   return page;
-})
-.then((page)=>{
-    let site = page.goto("https://www.bigbasket.com");
+    let selTool = cheerio.load(html);
 
-})
-.then(())
+    let category = selTool("CategoryMenu___StyledMenuItems-sc-d3svbp-4 jgpFYe");
+  //  let subcategory =category[0].hasClass("jsx-1259984711 w-56 px-2.5 bg-darkOnyx-800 text-silverSurfer-100 rounded-l-xs")
+   // let categoryhtml = 
+    console.log(category.children.length);
+    console.log(category);
+
+}
 
 
-
-
-.catch((error)=>{
-    console.log("error = ",error);
-})
