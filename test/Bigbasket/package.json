@@ -1,0 +1,16 @@
+{
+  "name": "bigbasket",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "node ./node_modules/bin/mocha "
+  },
+  "author": "saket",
+  "license": "ISC",
+  "dependencies": {
+    "puppeteer": "^20.0.0",
+    "puppeteer-core": "^20.0.0",
+    "uuid": "^9.0.0"
+  }
+}
